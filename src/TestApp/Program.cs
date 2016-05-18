@@ -9,13 +9,15 @@ namespace TestApp
 {
     class Program
     {
-		private const String AppKey = "YOUR_URBAN_AIRSHIP_APP_KEY";
-		private const String AppMasterSecret = "YOUR_URBAN_AIRSHIP_APP_MASTER_SECRET";
-	    
-		private const String TestDeviceToken = "YOUR_TEST_DEVICE_DEVICE_TOKEN";
-		private const String TestDeviceGuid = "YOUR_TEST_DEVICE_DEVICE_GUID"; //Example: "946fdc3d-0284-468f-a2f7-d007ed694908"
+		private const String AppKey = "uHRSNJQcTs2kYIFhk0MYnQ";
+		private const String AppMasterSecret = "rQyYRFOWRSuLno-LKHCr3w";
 
-	    private static UrbanAirSharpGateway _urbanAirSharpGateway;
+        //private const String TestDeviceToken = "YOUR_TEST_DEVICE_DEVICE_TOKEN";
+        //private const String TestDeviceGuid = "YOUR_TEST_DEVICE_DEVICE_GUID"; //Example: "946fdc3d-0284-468f-a2f7-d007ed694908"
+        private const string NamedUser = "3_78522448";
+
+
+        private static UrbanAirSharpGateway _urbanAirSharpGateway;
 
         static void Main(String[] args)
         {
@@ -23,7 +25,7 @@ namespace TestApp
 
 	        TestValidate();
 	        TestPush();
-			TestRegisterDevice();
+			//TestRegisterDevice();
 			TestSchedules();
 			TestTags();
 
@@ -35,7 +37,7 @@ namespace TestApp
 			Console.WriteLine("================ TESTING VALIDATE ================");
 			Console.WriteLine();
 
-			var response = _urbanAirSharpGateway.Validate("Validate push", new List<DeviceType> { DeviceType.Android }, TestDeviceGuid);
+			var response = _urbanAirSharpGateway.Validate("Validate push", new List<DeviceType> { DeviceType.Android }, namedUser: NamedUser);
 
 			Console.Write(response.HttpResponseCode + " - ");
 			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
@@ -60,7 +62,8 @@ namespace TestApp
 			Console.WriteLine();
 
 			Console.WriteLine("PUSH Targeted Alert to device");
-			response = _urbanAirSharpGateway.Push("Targeted Alert to device", new List<DeviceType> { DeviceType.Android }, TestDeviceGuid);
+            var audience = new Audience(AudienceType.NamedUser, NamedUser);
+			response = _urbanAirSharpGateway.Push("Targeted Alert to device", new List<DeviceType> { DeviceType.Ios }, customAudience: audience);
 			Console.Write(response.HttpResponseCode + " - ");
 			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
 			Console.WriteLine();
@@ -99,21 +102,21 @@ namespace TestApp
 			Console.WriteLine();
 		}
 
-		private static void TestRegisterDevice()
-	    {
-			Console.WriteLine("================ TESTING REGISTERING A DEVICE TOKEN ================");
-			Console.WriteLine();
-			var response = _urbanAirSharpGateway.RegisterDeviceToken(TestDeviceToken);
-			Console.WriteLine("Register Device Response: Ok?: {0}   Message: {1}  ErrorCode: {2}  ErrorMessage: {3}", 
-				response.Ok, 
-				response.Message, 
-				response.ErrorCode, 
-				response.Error);
+		//private static void TestRegisterDevice()
+	 //   {
+		//	Console.WriteLine("================ TESTING REGISTERING A DEVICE TOKEN ================");
+		//	Console.WriteLine();
+		//	var response = _urbanAirSharpGateway.RegisterDeviceToken(TestDeviceToken);
+		//	Console.WriteLine("Register Device Response: Ok?: {0}   Message: {1}  ErrorCode: {2}  ErrorMessage: {3}", 
+		//		response.Ok, 
+		//		response.Message, 
+		//		response.ErrorCode, 
+		//		response.Error);
 
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
-	    }
+		//	Console.Write(response.HttpResponseCode + " - ");
+		//	Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+		//	Console.WriteLine();
+	 //   }
 
 		private static void TestTags()
 		{

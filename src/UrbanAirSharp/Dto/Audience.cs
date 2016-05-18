@@ -18,6 +18,9 @@ namespace UrbanAirSharp.Dto
 		[JsonProperty("wns")]
 		public String WindowsId { get; private set; }
 
+        [JsonProperty("named_user")]
+        public String NamedUser { get; private set; }
+
 		[JsonProperty("mpns")]
 		public String WindowsPhoneId { get; private set; }
 
@@ -74,6 +77,9 @@ namespace UrbanAirSharp.Dto
 				case AudienceType.Tag:
 					Tag = value;
 					break;
+                case AudienceType.NamedUser:
+                    NamedUser = value;
+                    break;
 			}
 		}
 

@@ -76,7 +76,7 @@ namespace UrbanAirSharp
 		/// <param name="customAudience">a more specific way to choose the audience for the push. If this is set, deviceId is ignored</param>
 		/// <returns></returns>
 		public PushResponse Validate(String alert, IList<DeviceType> deviceTypes = null, String deviceId = null,
-			IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+			IList<BaseAlert> deviceAlerts = null, Audience customAudience = null, String namedUser = null)
 		{
 			return SendRequest(new PushValidateRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience)));
 		}
